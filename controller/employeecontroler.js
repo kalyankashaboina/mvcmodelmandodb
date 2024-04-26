@@ -1,6 +1,7 @@
 
 
-   const Employee=require("../model/employee")
+   const employee = require("../model/employee")
+const Employee=require("../model/employee")
 
         const createEmployee=async(req,res)=>{
         try{
@@ -96,9 +97,40 @@
         }
 
 
+        const deleteEmployee=async(req,res)=>{
+
+
+            try{
+
+        const{name,email,phone,city}=req.body;
+
+        const employee=await Employee.findByIdAndDelete(req.params.id)
+
+        if(!employee){
+            return res.status(404).json({message:"employee not found"})
+        }
+        res.status(201).json(employee)
+            }
+
+
+            catch(err){
+                console.log("server error",err)
+                res.status(500).json({message:"server error deleting data"})
+            }
 
 
 
 
 
-        module.exports={createEmployee,getAllEmployes,singleEmployee,updateEmployee}
+
+
+
+        }
+
+
+
+
+
+
+
+        module.exports={createEmployee,getAllEmployes,singleEmployee,updateEmployee,deleteEmployee}
